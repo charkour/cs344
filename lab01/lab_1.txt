@@ -1,0 +1,48 @@
+Charles Kornoelje | Feb 9 2020 | CS 344 | Lab01 | Calvin University
+
+b.i. GPS is implemented as a function.
+
+b.ii. They are lists.
+
+b.iii. Yes it is recursive. The recursion is done through achieve_all() and it finds subgoals recursively.
+
+d.i. This is based off of the Monkey and Banana problem. The rules are the monkey can move, carry around other things, reach for the bananas, and hold the stick in the air.
+The code does not include the stick and elevated bananas, but instead replaces the stick with a ball and the monkey cannot hold two objects at once.
+
+d.ii. Each domain action specifies the action to be completed, what conditions must be true for the action to happen, what new states the action will provide,
+and the removal of states that will result from the completed action.
+
+d.iii. The GSP completes the task by trying to achieve the goal state of 'not hungry'. The GPS considers an action that will result in the goal state of 'not hungry'.
+To achieve 'not hungry', the GSP considers 'eat bananas', an action that will reach the goal state. From there, the GPS will work backwards to consider which action will achieve the state before the state it just achieved.
+When the GPS considers an action that is at the current state, it will then perform the action and move onto the next state and action and progress closer to the goal.
+
+Output from the GPS to solve the problem.
+
+DEBUG:root:  Achieving: not hungry
+DEBUG:root:  Consider: eat bananas
+DEBUG:root:    Achieving: has bananas
+DEBUG:root:    Consider: grasp bananas
+DEBUG:root:      Achieving: at bananas
+DEBUG:root:      Consider: climb on chair
+DEBUG:root:        Achieving: chair at middle room
+DEBUG:root:        Consider: push chair from door to middle room
+DEBUG:root:          Achieving: chair at door
+DEBUG:root:          Achieving: at door
+DEBUG:root:        Action: push chair from door to middle room
+DEBUG:root:        Achieving: at middle room
+DEBUG:root:        Achieving: on floor
+DEBUG:root:      Action: climb on chair
+DEBUG:root:      Achieving: empty handed
+DEBUG:root:      Consider: drop ball
+DEBUG:root:        Achieving: has ball
+DEBUG:root:      Action: drop ball
+DEBUG:root:    Action: grasp bananas
+DEBUG:root:  Action: eat bananas
+
+d.iv. I believe the code is artificially intelligent and falls under the category of thinking humanly. The GPS is designed to mimic the human approach of
+solving problems using sub goals.
+
+d.v. A monkey who solves this problem in real life would show intelligence. The monkey knows it is hungry and needs to reach the bananas. It has to
+think about how it can solve a problem of pushing the chair to reach the bananas and then do grab them. Without intelligence, the monkey would not be able
+to reason that the action of moving the chair would result in the goal of reaching the bananas.
+
