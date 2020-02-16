@@ -1,0 +1,76 @@
+
+Exercise 2.1
+a. Which of the local search algorithms solves the problem? How well does each algorithm do?
+Both hill-climbing and simulated annealing solve the problem finding the correct solution of 15.
+Both do well because they find the correct answer.
+
+b. Which algorithm works more quickly?
+Hill-climbing works faster the simulated annealing. HC took ~ 0 sec and SA took about 0.017 sec.
+
+c. Does the starting value for x make any difference? Why or why not?
+Having a starting value far from the correct answer will make the time longer for HC because there will be more of a hill to climb to find the correct answer.
+The same reasoning might make SA take longer but it is possible finding the solution will not take longer because of the random aspect.
+
+d. What affect does changing the delta step value make on each algorithm? Why?
+Changing the delta make it sometimes so the best solution cannot be found. This is because change the delta from 1 to x, makes the
+steps between values x. A delta of 3 and an initial point of 13 would result in the algorithms finding the value 16.
+
+e. What is the purpose of the exp_schedule() method in the simulated annealing function call?
+The exp_schedule() purpose is to slowly lower the Temperature during the simulated annealing process so that the algorithm
+can "find a global optimum with probability approaching 1" (Russell, Norvig 125).
+It is a function that determines Temperature as a function of time.
+
+Exercise 2.2
+a. How do each of the algorithms do on this problem space? Why?
+SA generally gets a higher value than HC unless there is a high initial X value because HC will get "trapped"
+climbing a large arc when SA has a chance of jumping to a smaller arc before the temperature "cools" and then climbs.
+However, SA is usually better than HC because HC will only climb the arc of the initial X while SA's random moves can
+find a better arc to climb which will result in a better value.
+The values each algorithm finds varies dramatically from test to test, especially when compared to the abs.py results (which were much more consistent).
+
+b. Does the starting value make any difference here?
+Yes, when starting with a small X value (i.e. 1) SA performs much better than HC. When using a large X (i.e. 30),
+the difference between the two algorithms is not as much. This is because HC will climb the arc is starts on
+but SA has the ability to move to better (taller) arcs.
+
+c. Does modifying the step size (i.e., delta) affect the operation of the two algorithms? Why or why not?
+Yes. With HC, a larger than 1 delta will allow the algorithm to move from arc to arc on the abs(x*sin(x)) function which will
+allow for a better search result. This is the same for the SA algorithm. However, a large delta will prevent both algorithms
+from finding the local maximum of the arc because the algorithms are comparing values of delta integers away rather than
+neighboring integers (when delta is 1).
+
+d. What are the maximum and minimum possible values here, and how do the two algorithms score with respect to them?
+The minimum of abs(x*sin(x)) is 0 and the maximum is pos infinity for the values. The algorithms are good and do not
+have values lower than 0 and the value tend towards infinity when the delta is increased or the initial position approaches pos or neg infinity.
+
+
+Exercise 2.3
+a. How does each algorithm do with these restarts? Why?
+When simulating 30 trials with the initial value starting at 1 and increasing, HC will get ~ 15. as a value
+and SA will get ~ 22.6 as a value. SA does better with the restarts because it has a random chance to jump to arcs where the
+local maximum is higher where HC cannot jump arcs.
+
+b. What are the average values of the runs for each of the algorithms?
+HC average value = ~ 15.0
+SA average value = ~ 22.6
+
+c. If one of the algorithms does better, explain why; if not, explain why not.
+SA does better than HC because SA has the random chance of moving to an arc with a higher local maximum value when cannot move arcs.
+
+
+Exercise 2.4
+a. For which algorithm does beam search make the most sense?
+Beam search makes sense to be applied to simulated annealing because local beam search can behavior similarly to
+hill-climbing but takes up more space.
+
+b. How many solutions could you maintain with reasonable space and time constraints?
+It would depend on what is considered reasonable and the hardware available.
+For a simple program, like sine.py, I feel that 64 solutions would be manageable while keeping the
+time under a second per step.
+
+c. How would you modify the code to implement beam search? How is it different from random restarts, if at all?
+I would modify the code to pass the best x and its value to the start of the next iteration of the search.
+The next iteration of the search would have x as its initial value. This differs from random restarts where
+information is not shared between searches, but with local beam search, information is shared.
+
+
