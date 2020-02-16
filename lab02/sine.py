@@ -43,10 +43,14 @@ def average_list(l):
 
 if __name__ == '__main__':
     MAXIMUM = 30
+
+    # initialize arrays
     hc_solutions = []
     hc_values = []
     sa_solutions = []
     sa_values = []
+
+    # run multiple searches
     for i in range(1, MAXIMUM + 1):
 
         # Formulate a problem with a 2D hill function and a single maximum value.
@@ -87,6 +91,7 @@ if __name__ == '__main__':
               )
         print("="*12)
 
+    # output results
     print("Hill-climbing average       x: %0.3f" % (average_list(hc_solutions))
           + '\t\tvalue: ' + str(average_list(hc_values)))
     print("Simulated annealing average x: %0.3f" % (average_list(sa_solutions))
