@@ -1,0 +1,64 @@
+Exercise 3.1
+a. Which algorithms work (in a timely manner) and which don’t? Explain your results in terms of the capabilities (and implementations) of the algorithms and nature of the problems.
+DFS only worked for the solved puzzle and none of the other sudoku problems. This is because this algorithm will likely never get to a node that is a goal state.
+It would get stuck progressing down a branch, get stuck by not being able to follow the constrains, and then fail because it cannot go back.
+AC-3 is able to solve the solved puzzle and also able to solve the easy puzzle in a timely matter. AC-3 failed early on the hardest two puzzles because it would get stuck
+not being able to satisfy all of the constraints. There is no backtracking implemented for AC-3.
+Backtracking was able to solve the the easy puzzle but was slower than AC-3. It was not able to complete the two hardest puzzles in a timely manner because there are states that need to be searched when finding a goal state.
+Backtracking is traditional search and will go back if the constraints are not satisfied.
+Min-Conflicts solved only the solved puzzle and failed after time on the other puzzles. Hill climbing will reach a state (at the top of the hill) which will have no possible actions to resolve more conflicts.
+It cannot backtrack (because that would raise the number of conflicts) so it will fail.
+
+b. What effect does configuring the settings for backtracking have on the results? Try the following:
+
+    i. Set the variable/value ordering (i.e., the select_unassigned_variable parameter) to first-unassigned-variable (the default) or minimum-remaining-values (i.e., mrv).
+    Leaving this param as a default or changing it does not help solve the problem in a timely matter.
+    ii. Set the inference (i.e., the inference parameter) to forward-checking (i.e., forward_checking).
+    Settings inference=forward_checking finishes the problem in a pretty timely manner.
+
+Which, if any, of these settings should work best for sudoku? What combination of settings actually works the best?
+The best combination of parameters for backtracking is select_unassigned_variable=mrv and inference=forward_checking.
+mrv picks the cell with the least number of possible values rather than working sequentially through the sudoku board.
+Adding forward checking allows the search algorithm to remove states that would provide conflicts in the future.
+With these parameters, the backtracking algorithm solves the harder problems and hardest problems in a few seconds.
+
+Exercise 3.2
+a. How large can n get for each of the algorithms? Why?
+AC-3 does not work for n-queens problem because there is more than one solution so the domain of each variable would be more than one.
+For depth-first search, I assume n cannot get very large before it starts to fail frequently.
+Back-tracking with default parameters is able to solve the problem when n=64 in a timely manner and solve the problem quickly when n=512 when mrv and forward checking parameters are set.
+With n = 5000, min-conflicts solves the puzzle in about 20 seconds and back-tracking does not solve the problem in a timely manner, even with mrv and forward checking.
+Min-conflicts performs better than back-tracking for n-queens problems because possible solutions are spread around the state space which allows for the min-conflicts algorithm to find a solution quickly.
+Back-tracking takes longer than min-conflicts because it is traditional search rather than local search, so it has to place the queens sequentially and assess the constraints before placing the next.
+
+b. What backtracking settings work the best? Why?
+Together the two settings help backtracking solve the problem quickly.
+MRV appears to be more valuable than forward checking with the n-queens problem.
+MRV will look for the move from its current state that will result in the least amount of conflicts rather than just picking any new state that has less conflicts than the current state.
+This state pruning significantly speeds the search algorithm.
+
+c. How many steps does Min-Conflicts require to do its work? Why?
+It will solve the n-queens problem on average in 50 steps because possible "solutions are densely distributed throughout the state space" (AIMA pg. 221).
+Local search performs well when there are many solutions spread around the search space as the search randomly places queens in a complete state and then
+moves queens using the min-conflicts heuristic.
+The time to solve is roughly independent of the problem size once all of the queens have been placed (AIMA 221).
+
+
+Exercise 3.3
+a. Compare and contrast the specifications for CSP (i.e., csp.CSP) and traditional problems (i.e., search.Problem). Be sure to consider the nature of states, domains, actions, results and goal tests.
+CSP and traditional search problems are similar in the sense that they both have an initial state and a goal state.
+In both searches, there needs to be a method for checking if a goal state has been reached.
+However, traditional search states are typically described as a black-box with no internal structure, but with CSP states, each of them have a "factored representation" as the textbook calls them.
+Having a factored state means that each state has a set of variables which each have a value.
+A CSP is solved when each variable's value satisfies all constraints for the variables (AIMA 202).
+And a traditional search puzzle is solved when the state passes the goal test method.
+Traditional search problems have actions that are specified and CSP actions move between states based on the constraints given.
+A result is the action of moving from one state to the next, which both types of algorithms use.
+A domain refers to the different values a variable can take in a CSP which are defined by the constraints of the problem.
+
+b. Compare and contrast the nature of the heuristics deployed in traditional and constraint-based problem solving.
+In both traditional and constrain-based problem solving, heuristics are used to solve problems in a more efficient manner.
+Heuristics allow search algorithms to make "short-cuts" in their search by removing states that will not progress to a goal state, or choose
+states that will likely progress the search closer to the goal state.
+CSPs use general-purpose heuristics (such as forward checking or minimum remaining values) where traditional search algorithms use problem-specific heuristics (such as a heuristic defined for an A* search).
+CSPs are able to employ general-purpose heuristics due to the structured states.
