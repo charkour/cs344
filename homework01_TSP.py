@@ -75,6 +75,8 @@ class TSPProblem(Problem):
     #         cost += self.distances[state2[n]][state2[(n + 1) % self.n]]
     #     return cost
 
+    # TODO: Need to check the goal state? make sure it is valid?
+
 
     def value(self, state):
         """Get cost of current state. HC tries to maximize"""
