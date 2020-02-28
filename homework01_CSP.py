@@ -1,73 +1,10 @@
-from csp import backtracking_search, NQueensCSP, min_conflicts, mrv, \
-    forward_checking, AC3, CSP
+from csp import backtracking_search, CSP
+import itertools
 
-# Create list of variables,
+# create list of variables,
 classes = ["cs108", "cs112", "cs212", "cs214", "cs262", "cs232"]
 
-
-# Create list of domains,
-not_domains = {
-    "faculty":
-        ["schuurman", "adams", "vanderlinden", "norman"],
-    "time":
-        ["mwf900", "mwf1030", "mwf1130", "tth1030"],
-    "room":
-        ["nh253", "sb382"]
-}
-
-# https://stackoverflow.com/questions/798854/all-combinations-of-a-list-of-lists
-# Note: I first had it faculty, time, room, and then faculty one teacher would do the majority of teaching.
-import itertools
-a_fun_list = [not_domains["time"], not_domains["room"], not_domains["faculty"], ]
-values = list(itertools.product(*a_fun_list))
-print(values)
-
-# https://www.geeksforgeeks.org/python-map-function/
-domains = dict(map(lambda aClass: (aClass, values[:]), classes))
-print(domains['cs108'])
-
-
-
-# domains = {
-#     "classes": {
-#         "cs108": "schuurman",
-#         "cs112": "adams",
-#         "cs212": "vanderlinden",
-#         "cs214": "norman",
-#         "cs262": "adams",
-#         "cs232": "norman",
-#     },
-#     "time":
-#         ["mwf900", "mwf1030", "mwf1130", "tth1030"],
-#     "room":
-#         ["nh253", "sb382"]
-# }
-
-
-
-# Create list of constrains
-def constraints(A, a, B, b):
-    # They are the same class (var)
-
-    # a and b are tuples in the form (time, room, faculty)
-    print("A: " + str(A))
-    print("B: " + str(B))
-    print("a: " + str(a))
-    print("b: " + str(b))
-    if A == B:
-        return True
-
-    # check to make sure faculty is not teaching at the same time
-    if a[0] == b[0] and a[2] == b[2]:
-        return False
-
-    # Check to make sure class is not in the same room at the same time
-    if a[0] == b[0] and a[1] == b[1]:
-        return False
-    return True
-
-
-#TODO: What are neighbors?
+# each variable and their neighbors
 neighbors = {
     "cs108": ["cs112", "cs212", "cs214", "cs262", "cs232"],
     "cs112": ["cs108", "cs212", "cs214", "cs262", "cs232"],
@@ -77,41 +14,50 @@ neighbors = {
     "cs232": ["cs108", "cs112", "cs212", "cs214", "cs262"]
 }
 
-# Pass all to CSP
+attributes = {
+    "faculty": ["schuurman", "adams", "vanderlinden", "norman"],
+    "time": ["mwf900", "mwf1030", "mwf1130", "tth1030"],
+    "room": ["nh253", "sb382"]
+}
+
+# referenced for itertools: https://stackoverflow.com/questions/798854/all-combinations-of-a-list-of-lists
+attribute_list = [attributes["time"], attributes["room"], attributes["faculty"]]
+possible_values = list(itertools.product(*attribute_list))
+
+# referenced for function mapping: https://www.geeksforgeeks.org/python-map-function/
+domains = dict(map(lambda aClass: (aClass, possible_values[:]), classes))
 
 
-class SchedulingCSP(CSP):
+def constraints(Class1, c1, Class2, c2):
+    """Constraints for class scheduling
+    c1 and c2 are tuples in the form (time, room, faculty)
+    returns true if constraints are met.
+    The constraint that there is only one section of class
+    is implicit because classes are variables.
+    """
+    # Return true if same class.
+    if Class1 == Class2:
+        return True
 
-    def __init__(self, c, d, n, cs):
-        CSP.__init__(self, c, d, n, cs)
+    # check to make sure faculty is not teaching at the same time
+    if c1[0] == c2[0] and c1[2] == c2[2]:
+        return False
 
-    # def nconflicts(self, var, val, assignment):
-    #     """Need to check conflits
-    #     check if:
-    #         more than on course being offered
-    #         faculty member is teaching more than one course
-    #         room has no more than one class at a time
-    #         """
+    # Check to make sure class is not in the same room at the same time
+    if c1[0] == c2[0] and c1[1] == c2[1]:
+        return False
+    return True
 
 
-problem = SchedulingCSP(classes, domains, neighbors, constraints)
+# Setup problem
+problem = CSP(classes, domains, neighbors, constraints)
 
 solution = backtracking_search(problem)
 
-# # 3. Print the results.
-# Handle AC3 solutions (boolean values) first, they behave differently.
-if type(solution) is bool:
-    if solution and problem.goal_test(problem.infer_assignment()):
-        print('AC3 Solution:')
-    else:
-        print('AC Failure:')
-    print(problem.curr_domains)
-
-# Handle other solutions next.
-elif solution is not None and problem.goal_test(solution):
+# Adapted from u03constraint/queens.py
+if solution is not None and problem.goal_test(solution):
     print('Solution:')
     print(solution)
-#    problem.display(problem.infer_assignment())
 else:
     print('Failed - domains: ' + str(problem.curr_domains))
     problem.display(problem.infer_assignment())
