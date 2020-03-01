@@ -1,0 +1,20 @@
+i) *P*(User) = <0.89, 0.911> (Given)
+ii) P(test | user) = 0.99
+iii) P(¬test | user) = 1 - 0.99 = 0.1
+iv) P(test | ¬user) = 1 - 0.98 = 0.02
+v) *P*(User | test) = a<P(test|user) * P(user), P(test|~user) * P(~user)>
+        = a<.99 * .089, .02 * .911>
+        = a<0.08811, 0.01822>
+        = 1/(0.08811 + 0.01822)<0.08811, 0.01822>
+        = 9.4<0.08811, 0.01822>
+        = <.83, .17>
+
+b) *P*(Cancer | test) = a<P(test|cancer) * P(cancer), P(test|~cancer) * P(~cancer)>
+        = a<.8 * .01, .096 * .99>
+        = a<0.008, 0.09504>
+        = 1/(0.008 + 0.09504)<0.008, 0.09504>
+        = 9.7<0.008, 0.09504>
+        = <0.078, 0.922>
+
+7.8% chance of having cancer if mammography is positive.
+92.2% chance of not having cancer if mammography is positive.
