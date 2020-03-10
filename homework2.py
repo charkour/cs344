@@ -15,28 +15,35 @@ def count_occurrences(corpus, count):
 
 
 bad = count_occurrences(spam_corpus, Counter())
-print(bad)
 good = count_occurrences(ham_corpus, Counter())
-print(good)
 nbad = len(spam_corpus)
 ngood = len(ham_corpus)
-print(nbad)
-print(ngood)
+
+g_keys = list(good.keys())
+b_keys = list(bad.keys())
+# https://stackoverflow.com/questions/1319338/combining-two-lists-and-removing-duplicates-without-removing-duplicates-in-orig
+combined_keys = b_keys
+combined_keys.extend(k for k in g_keys if k not in combined_keys)
 
 
-# Set g = 2 * the word's good value (or 0 if there is no value)
-# Set b = the word's bad value (or 0)
-# If g + b > 5
-# return max(0.01, min(0.99, min(1.0, b / nbad) / (min(1.0, g / ngood) + min(1.0, b / nbad))))
-# Else
-# return 0
 
 def probability_email_containing_word_is_spam(word):
-    g = 2*good[word]
-    b = bad[word]
+    """Adapted from the article"""
+    g = 2*good[word] if word in good else 0
+    b = bad[word] if word in bad else 0
     if g + b > 1:  # changed to one
         return max(0.01, min(0.99, min(1.0, b / nbad) / (min(1.0, g / ngood) + min(1.0, b / nbad))))
     else:
         return 0
+
+# create a third hash
+
+
+probs = dict()
+for key in combined_keys:
+    probs[key] = probability_email_containing_word_is_spam(key)
+
+print(probs)
+
 
 
