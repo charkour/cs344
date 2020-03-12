@@ -1,6 +1,8 @@
 # Temp file for development
 from collections import Counter
 
+THRESHOLD = 1
+
 spam_corpus = [["I", "am", "spam", "spam", "I", "am"], ["I", "do", "not", "like", "that", "spamiam"]]
 ham_corpus = [["do", "i", "like", "green", "eggs", "and", "ham"], ["i", "do"]]
 
@@ -31,7 +33,7 @@ def probability_email_containing_word_is_spam(word):
     """Adapted from the article"""
     g = 2*good[word] if word in good else 0
     b = bad[word] if word in bad else 0
-    if g + b > 1:  # changed to one
+    if g + b > THRESHOLD:  # changed to one
         return max(0.01, min(0.99, min(1.0, b / nbad) / (min(1.0, g / ngood) + min(1.0, b / nbad))))
     else:
         return 0
@@ -52,6 +54,22 @@ print(probs)
 This is Bayesian because it uses a bayesian combination of probabilities. MORE!!!
 '''
 
+"""
+Set prod = the product of the elements of probs
+Return prod / (prod + (the product of the complement of the elements of probs))
+"""
+def calculate_spam_prob(email):
+    prod = 1
+    complement = 1
+    for element in email:
+        prod *= probs[element.lower()]
+        complement *= (1 - probs[element.lower()])
+    return prod / (prod + complement)
+
+print(calculate_spam_prob(ham_corpus[0]))
+print(calculate_spam_prob(ham_corpus[1]))
+print(calculate_spam_prob(spam_corpus[0]))
+print(calculate_spam_prob(spam_corpus[1]))
 
 
 """
