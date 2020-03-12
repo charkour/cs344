@@ -45,5 +45,22 @@ for key in combined_keys:
 
 print(probs)
 
+# TODO: Add the other function!!!
+
+# TODO: What makes it Bayesian?
+'''
+This is Bayesian because it uses a bayesian combination of probabilities. MORE!!!
+'''
+
+
+
+"""
+Part 2: Join prob = 2^4 = 16
+bayesian: 9
+With the Bayesian network structure, we are able to make simplifications due to the assumptions based 
+on how the network is structured.
+
+"""
+
 
 
