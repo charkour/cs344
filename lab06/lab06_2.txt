@@ -1,0 +1,24 @@
+1. We want the ML model to predict if an email in Gmail is "important".
+2. Our ideal outcome is to flag emails as important that are imperative the to user, increasing the user experience
+and insuring they do not miss an important email.
+3a. Our success metric would be users seeing all of their important emails.
+3b. We want 95% of important emails to be properly flagged as so.
+3c. Failure would be if the user misses emails they should see.
+4. Classification output. If an email is important or not.
+5a. The output will be a boolean value for each incoming email as to if the email is true or false.
+5b. The output will immediately be shown to the user in the UI.
+6. One possible heuristic would be to flag emails as important if it from a sender that the user
+usually responds to and spends a long time reading the email. Another heuristic could be if an email
+contains specific keywords or is in reply to a ongoing conversation between the user and another.
+7a. Our problem is best framed as a binary classification, which predicts if an email is flagged as important or not.
+7b. Binary classification. Each email is either either important or not based on features such as
+date, time, sender, contents, subject.
+8.
+Date    | Time      | Sender        | Contents          | Subject       | Output (Label)
+03/20/20 6:00am     jon@calvin.edu   Hi Charlie....      Turtle Tracker  Important
+03/20/20 3:59am     spam@email.com   HELLO.I am PRINCE   Send my GOLD    Unimportant
+
+9. Date, Time, Sender, Contents, Subject all come from the metadata of the email.
+I will not be too hard to parse the email for this data and pipeline it into a .csv.
+10. Sender        | Contents                | Subject
+   jen@calvin.edu   Greetings: I can meet.   Meeting at Cottage
