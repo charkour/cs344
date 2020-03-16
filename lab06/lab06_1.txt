@@ -1,0 +1,13 @@
+Charles Kornoelje | CS 344 | Lab06 | 3/15/20 | Cal Uni | Information Gain of Hungry?
+
+6.1)
+Remainder(Hungry?) = (7/12)Entropy('yes') + (5/12)Entropy('no')
+    = (7/12)(-1)[(5/7)lg(5/7)+(2/7)lg(2/7)]+(5/12)(-1)[(1/5)lg(1/5)+(4/5)lg(4/5)]
+    = .503 + .301 = .804 bits
+
+Gain(Hungry?) = Entropy(Restaurant) - Remainder(Hungry?)
+    = 1.0 - .804 = .196 bits
+
+The information gain for asking the question Hungry? results in 0.196 bits which means
+a little bit of information is gained by asking the question.
+This is a better question than Patrons? (0 bits), and is worse than Types? (0.54 bits).
