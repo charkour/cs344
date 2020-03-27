@@ -1,0 +1,43 @@
+Charles Kornoelje | Lab 7 | CS 344 | Mar. 26, 2020 | Cal Uni
+
+7.3
+
+a.1)
+california_housing_dataframe["rooms_per_person"] = (
+   california_housing_dataframe["total_rooms"] / california_housing_dataframe["population"])
+
+calibration_data = train_model(
+    learning_rate=0.03,
+    steps=500,
+    batch_size=5,
+    input_feature="rooms_per_person"
+)
+
+Final RMSE (on training data): 134.65
+
+a.2)
+plt.scatter(calibration_data["predictions"], calibration_data["targets"])
+
+There are quite a few (7) outliers where the predicted value is above 1500. Looking at the data, the average value
+of rooms_per_person is 2, but the max value is 55.2, which is one of the seven outliers. I assume that the
+rest of the outliers are also called by very large rooms_per_person values.
+
+a.3)
+california_housing_dataframe["rooms_per_person"] = (
+    california_housing_dataframe["rooms_per_person"]).apply(lambda x: min(x, 7))
+
+california_housing_dataframe["rooms_per_person"].hist()
+
+calibration_data = train_model(
+    learning_rate=0.05,
+    steps=500,
+    batch_size=5,
+    input_feature="rooms_per_person")
+
+Final RMSE (on training data): 110.85 (better than in task2)
+
+b) Synthetic features extended the ability to make predictions from data by calculating data that
+was not originally collected by combining features.
+
+c) An outlier is a data point that is significantly different from the rest of the data. They are typically
+removed from the feature before training a model.

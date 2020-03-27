@@ -1,16 +1,18 @@
+Charles Kornoelje | Lab 7 | CS 344 | Mar. 26, 2020 | Cal Uni
+
 7.1
+a.1) cities["Saint50SqMi"] = (cities["City name"].apply(lambda name: name.startswith("San"))) & (cities["Area square miles"] > 50)
+     cities
 
-a)
-
-1) cities["Saint50SqMi"] = (cities["City name"].apply(lambda name: name.startswith("San"))) & (cities["Area square miles"] > 50)
-    cities
-
-2) cities.reindex([20, 5, 10])
-I think this is allowed so you could add data in the future. Allowing missing indecies makes it eaiser without
-having to worry about the inital input.
+a.2) cities.reindex([20, 5, 10])
+I think this is allowed so you could add data in the future. Allowing missing indices makes it easier to use
+reindex without having to worry about the initial input.
 
 b)
-Pandas provides an API useful for data manipulation
+Pandas provides an API useful for data manipulation and analysis such as the DataFrame object.
+NumPy allows users to work with high-performance, multi-dimensional arrays.
 
-c) When the data is sorted, it is helpful to reorder it when splitting into testing and trainig sets
-in order to make sure there is no correlation between the data.
+c)
+When the data is sorted, it is helpful to reorder it when splitting into testing and training sets
+in order to make sure there is no correlation between each observation and that the test
+and training sets are good representations of the whole data set.

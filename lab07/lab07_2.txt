@@ -1,0 +1,34 @@
+Charles Kornoelje | Lab 7 | CS 344 | Mar. 26, 2020 | Cal Uni
+
+7.2
+
+a)
+Both categorical and numeric data can have numbers. Categorical data is text based and can be thought of as
+a classifier or label (ie. man, woman are classifiers). Numerical data is a number that can be an int or float.
+Numerical operations can be formed on numeric data.
+
+b.Task1)
+train_model(
+    learning_rate=0.00003,
+    steps=500,
+    batch_size=1
+)
+
+Final RMSE (on training data): 167.71
+
+b.Task2)
+train_model(
+    learning_rate=0.00003,
+    steps=300,
+    batch_size=5,
+    input_feature="population"
+)
+
+Final RMSE (on training data): 192.75 (tried but wasn't better)
+
+c)
+The hyperparameters are learning_rate, steps, and batch_size. (input_feature sets the feature in the model).
+There is not a standard tuning algorithm for tweaking the hyperparameters, but there are rules of thumb to follow
+which are provided on the TensorFlow tutorial page. I would not it a standard algorithm because tweaking the
+hyperparamters has a different effect for each set of data, and I feel a standard algorithm would want
+the same results for each dataset.
