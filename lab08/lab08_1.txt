@@ -1,0 +1,73 @@
+Charles Kornoelje | CS 344 | Lab08 | 4/5/20 | Cal Uni
+
+a)
+
+Task1)
+The data looks good for the most part. The latitude and longitude values are in California.
+In the training set, the rooms_per_person max is 55.2 which seems very high. The scales the features' data are measured
+are not given which is important to know. The max median_house_value is 500.0 in both the training and
+validation set so that could show a possible artificial maximum value.
+
+Task2)
+One key difference between the training and validation data is the distribution of longitude values.
+The training set only contains values from -121.4 to -114.3 and the validation set contains values from
+-121.4 to 124.3. The ranges should include the same numbers. Currently the two sets are split based on
+longitude which can but bias in the results.
+
+Task3)
+Have to uncomment the code containing np.random.permutation to randomize the data. Now the plot looks similar
+with both having a similar range of data for longitude.
+
+Task4) Note: I got help from the solutions to find the answer
+
+  # 1. Create input functions.
+  training_input_fn = lambda: my_input_fn(
+      training_examples,
+      training_targets["median_house_value"],
+      batch_size=batch_size)
+  predict_training_input_fn = lambda: my_input_fn(
+      training_examples,
+      training_targets["median_house_value"],
+      num_epochs=1,
+      shuffle=False)
+  predict_validation_input_fn = lambda: my_input_fn(
+      validation_examples, validation_targets["median_house_value"],
+      num_epochs=1,
+      shuffle=False)
+
+      # 2. Take a break and compute predictions.
+    training_predictions = linear_regressor.predict(input_fn=predict_training_input_fn)
+    training_predictions = np.array([item['predictions'][0] for item in training_predictions])
+
+    validation_predictions = linear_regressor.predict(input_fn=predict_validation_input_fn)
+    validation_predictions = np.array([item['predictions'][0] for item in validation_predictions])
+
+  linear_regressor = train_model(
+    learning_rate=0.00002,
+    steps=100,
+    batch_size=5,
+    training_examples=training_examples,
+    training_targets=training_targets,
+    validation_examples=validation_examples,
+    validation_targets=validation_targets)
+
+period 09 : 212.07
+
+The model performed better on the validation set than it did on the training set which it good and shows that the
+model is not overfit.
+
+
+Task5)
+Final RMSE (on test data): 208.48
+
+The model on the test data had a better RMSE (208.48) than on the validation data (212.07). Model performed better
+on the test data. This means the performance of the model is good and not overfitted.
+
+b)
+From this exercised I learned about training, validation, and testing datasets. I learned that training data is used
+to train the model. I also learned that validation data is a small, unused section from the original dataset that
+is not included in the training dataset. The validation set is used to assess the model while it trains when
+tweaking the value. The test dataset is a new dataset that has not been seen by the model before and it
+is where we evaluate the model's performance. We can compare the RMSE of the test dataset to the validation
+dataset that was trained by the training dataset.
+
