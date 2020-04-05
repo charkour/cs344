@@ -1,0 +1,58 @@
+Charles Kornoelje | CS 344 | Lab08 | 4/5/20 | Cal Uni
+
+Exercise 8.2
+a)
+Pearson correlation coefficients are a measure of the linear correlation between two variables on a scale from
+-1 to 1. The PCC between housing_median_age and latitude is 0.0 meaning the two are not
+correlated with each other which makes sense because the latitude and the median age which makes sense because
+the two contain information data is dependent from one another. A change in latitude does not typically mean a
+change in age.
+
+b)
+Task1)
+minimal_features = [
+  'housing_median_age',
+  'latitude',
+]
+
+train_model(
+    learning_rate=0.002,
+    steps=500,
+    batch_size=5,
+    training_examples=minimal_training_examples,
+    training_targets=training_targets,
+    validation_examples=minimal_validation_examples,
+    validation_targets=validation_targets)
+Final RMSE: period 09 : 120.53
+Beat the Google baseline which was 150.11.
+
+Task2)
+Creating buckets for the latitude makes the most sense to me because groups can be a categorical variable and
+a classifier for a city which will allow for non-linear relationships. Thankfully the Google solution wanted to also
+make buckets so I used their code.
+
+def select_and_transform_features(source_df):
+  LATITUDE_RANGES = zip(range(32, 44), range(33, 45))
+  selected_examples = pd.DataFrame()
+  selected_examples["median_income"] = source_df["median_income"]
+  for r in LATITUDE_RANGES:
+    selected_examples["latitude_%d_to_%d" % r] = source_df["latitude"].apply(
+      lambda l: 1.0 if l >= r[0] and l < r[1] else 0.0)
+  return selected_examples
+
+selected_training_examples = select_and_transform_features(training_examples)
+selected_validation_examples = select_and_transform_features(validation_examples)
+
+_ = train_model(
+    learning_rate=0.02,
+    steps=500,
+    batch_size=5,
+    training_examples=selected_training_examples,
+    training_targets=training_targets,
+    validation_examples=selected_validation_examples,
+    validation_targets=validation_targets)
+    
+Final RMSE: period 09 : 86.81
+
+I beat the Google verison.
+Google: period 09 : 140.19
