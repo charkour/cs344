@@ -51,7 +51,7 @@ _ = train_model(
     training_targets=training_targets,
     validation_examples=selected_validation_examples,
     validation_targets=validation_targets)
-    
+
 Final RMSE: period 09 : 86.81
 
 I beat the Google verison.

@@ -2,3 +2,46 @@ Charles Kornoelje | CS 344 | Lab08 | 4/5/20 | Cal Uni
 
 EXERCISE 8.3
 a)
+FTRL manages the learning rate by scaling the learning rate differently for different coefficients.
+Looking at the docs, it seems that the learning rate is decreased during training based on a rate power.
+
+b)
+Bucketization is good because it creates a feature that is discrete. It is a classifier/label for the data. It
+creates subgroups within the data to make modeling better than if there was a wider range of data.
+Bucketization allows for one-hot encoding.
+
+c)
+Task1) help coding from Google
+  bucketized_latitude = tf.feature_column.bucketized_column(
+    latitude, boundaries=get_quantile_based_boundaries(
+      training_examples["latitude"], 10))
+  bucketized_housing_median_age = tf.feature_column.bucketized_column(
+    housing_median_age, boundaries=get_quantile_based_boundaries(
+      training_examples["housing_median_age"], 7))
+  bucketized_median_income = tf.feature_column.bucketized_column(
+    median_income, boundaries=get_quantile_based_boundaries(
+      training_examples["median_income"], 7))
+  bucketized_rooms_per_person = tf.feature_column.bucketized_column(
+    rooms_per_person, boundaries=get_quantile_based_boundaries(
+      training_examples["rooms_per_person"], 7))
+
+
+Pre-bucket: period 09 : 175.55
+Post-bucket: period 09 : 88.21
+Bucketing improved results
+Yes, bucketing in task1 made sense.
+
+Task2) (from Google)
+long_x_lat = tf.feature_column.crossed_column(
+  set([bucketized_longitude, bucketized_latitude]), hash_bucket_size=1000)
+
+Use a feature cross between bucketized latitude and longitude is useful because the model with take the two values
+together when training the models rather than independent from one another. It can be helpful when finding
+relationships to have a feature cross. The tutorial says the this cross can be thought of as well defined city blocks
+that the model can then learn characteristics about.
+
+Pre-cross: Post-bucket: period 09 : 88.21
+Post-cross: period 09 : 88.03
+
+The feature cross performed (slightly) better.
+
