@@ -1,3 +1,32 @@
 Charles Kornoelje | CS 344 | Lab08 | 4/5/20 | Cal Uni
 
-Exercise 8.1
+Exercise 8.4
+a) K-fold validation is used when the sample space is small (when there are few data points). Using normal validation
+techniques, the validation scores may have a high variance based on how the data is split for training and
+validating. K-fold splits the data in K groups and then trains the model with K-1 groups and then validates with the
+other group. The validation would be the average of the K scores. This good allows for validation scores for a
+small sample space.
+
+b) Using "wildly different ranges" is problematic because it would make the learning more difficult for the network
+model. The network would first have to adapt to the different ranges of the features before it can learn something
+substantial. Normalizing the data helps to overcome the differing ranges. Using large ranges could "blow out"
+floating point values as the model trains.
+
+c) I agree that smaller datasets prefer smaller networks. A large network will overfit on the
+training data which will not be beneficial to use for future predictions.
+
+d) For time's sake, I tried it with one less layer and only a width of 32. The training MAE was lower than the given
+architecture but the test MSE was higher than the test MSE with the given architecture.
+I believe it did worse with less layers and width because the network has less weights to calculate and less
+flexibility when modeling the data; thus it does the best it can on the training set but does so in a way that is
+not generic enough to fit well for the test data. My guess that adding layers and nodes will be better to a point,
+but will begin to overfit if there are too many layers and they are too wide. The optimal number of layers and
+width size can likely be calculated but I do not know those statistics.
+
+New architecture:
+Avg MAE: 2.2172100245952606
+test MSE: 3.1794238090515137
+
+Normal Architecture:
+Avg MAE: 2.4716001749038696
+test MSE: 2.7064058780670166
