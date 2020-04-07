@@ -1,0 +1,26 @@
+Remainder(Price?) = 3/12Entropy($$$) + 2/12Entropy($$) + 7/12Entropy($)
+        = 3/12(-1)[1/3lg(1/3)+2/3lg(2/3)] + 0 + 7/12(-1)[3/7lg(3/7)+4/7lg(4/7)]
+        = 0.804 bits
+
+Gain(Price?) = Entropy(Restaurant) - Remainder(Price?)
+        = 1 - 0.804 = .196 bits
+
+The information gain for asking the question Price? results in 0.196 bits which means
+a little bit of information is gained by asking the question.
+This is a more valuable question than Patrons? (0 bits), and is less valuable than Types? (0.54 bits).
+(And it is the same information gain as asking Hungry?)
+
+In class, we were able to create a neural network to compute the XOR function by using multiple layers. By relaxing
+the convention of sequential layers, one is able to simplify the network.
+
+The network shown below has five edge weights and two activation functions. The edge weights are multiplied by
+each node's output that the edge points away from. The inputs can either be 0 or 1. For the center node,
+the activation function is a Heaviside step function with a threshold of 1.5. If the net input sum is above 1.5, then
+the node will output 1 which will be multiplied by the edge weight of -2. The bottom node has an activation function
+of .5 so if the net input sum is above .5, it will output 1 and if not it will output 0.
+
+Using this network will correctly compute the XOR function.
+
+I do not think it is possible to create a network that is not densely connected because the center node needs to
+know what value the two input nodes are. I referenced this webpage. http://mnemstudio.org/neural-networks-multilayer-perceptrons.htm
+
