@@ -1,0 +1,53 @@
+Charles Kornoelje | Lab09 | CS 344 | 4/12/20 | Cal Uni
+
+a. How effective is the linear regression approach to the problem?
+Linear regression is alright on the problem, but not the greatest.
+It does .01 better on training than validation.
+There is some inconsistency in the RMSE as the periods increase showing that the model might not fit the data too well.
+
+RMSE (on training data):
+  period 00 : 0.45
+  period 01 : 0.45
+  period 02 : 0.44
+  period 03 : 0.44
+  period 04 : 0.45
+  period 05 : 0.44
+  period 06 : 0.44
+  period 07 : 0.44
+  period 08 : 0.44
+  period 09 : 0.44
+
+
+
+b. Task 1: Compare and contrast L2 Loss vs LogLoss.
+L2 Loss and LogLoss are both evaluation metrics for false classifications to assess the accuracy of a classifer.
+They contrast in the way the loss functions penalize for misclassifications. L2 does not penalize for when the output
+is given in probability but LogLoss penalizes "confidence errors" in the probability more heavily.
+
+c. Task 2: Explain how effective logistic regression is compared with linear regression.
+In this case, the LogLoss vs periods graph is smoother than the graph for linear regression
+showing that the logistic regression model
+fits the data better than the linear regression. To find how much better, we would next to calculate the LogLoss for
+the linear regression.
+
+LogLoss (on training data):
+  period 00 : 0.60
+  period 01 : 0.58
+  period 02 : 0.57
+  period 03 : 0.55
+  period 04 : 0.55
+  period 05 : 0.55
+  period 06 : 0.54
+  period 07 : 0.53
+  period 08 : 0.54
+  period 09 : 0.54
+
+
+d. Task 3: Here, just report the best values you can achieve for AUC/accuracy and what hyperparameters you used to get them.
+AUC on the validation set: 0.78
+Accuracy on the validation set: 0.78
+
+With hyperparameters: 
+    learning_rate=0.000004,
+    steps=2000,
+    batch_size=100,
