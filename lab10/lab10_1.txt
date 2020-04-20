@@ -1,0 +1,18 @@
+Charles Kornoelje | Lab10 | CS344 | April 19, 2020 | Cal Uni
+
+a) I would rather use Keras to build my model because it provides a more intuitive and simple API for creating
+neural network models. I like how you define layers in Keras better than in TensorFlow. Perhaps I would like
+TensorFlow if I had more experience with neural networks.
+
+b)
+best hyperparameters:
+    learning_rate=0.001,
+    steps=3000,
+    batch_size=100,
+    hidden_units=[10, 10],
+
+Final RMSE (on training data):   106.13
+Final RMSE (on validation data): 105.63
+Final RMSE (on test data): 105.01
+
+Performed the best on the test data!

@@ -1,0 +1,30 @@
+Charles Kornoelje | Lab10 | CS344 | April 19, 2020 | Cal Uni
+
+a) In this example, the confusion matrix shows which numbers (classes) were misclassified as other numbers.
+8s and 5s and 4s and 9s sometimes get confused for each other.
+
+b) The TensorFlow architecture is not a CNN like the Keras class example is meaning that the TensorFlow
+architecture does not contain a convolution layer to capture local information and reduce the
+complexity of the model. The TensorFlow architecture has two hidden layers that
+is 100 nodes wide but the Keras one only has one hidden later that is 64 nodes wide.
+If you are referring the the Keras network from unit 8, then the TensorFlow architecture has two hidden layers that
+is 100 nodes wide but the Keras one only has one hidden later that is 512 nodes wide.
+
+I could not increase the baseline accuracy. But I did increase the validation accuracy interestingly.
+    learning_rate=0.05,
+    steps=1000,
+    batch_size=100,
+    hidden_units=[100, 100],
+Final accuracy (on validation data): 0.95
+Accuracy on test data: 0.95
+
+baseline:
+    Final accuracy (on validation data): 0.94
+    Accuracy on test data: 0.95
+
+c)
+The 10 step visualizations were very pixelated and no patters in the images are evident. But in the 1000
+step visualizations, more patterns of components of numbers start to appear. The images seem much more "smooth"
+than the 10 step images.
+
+

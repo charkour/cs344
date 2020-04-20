@@ -1,0 +1,47 @@
+Charles Kornoelje | Lab10 | CS344 | April 19, 2020 | Cal Uni
+
+a)
+AdaGrad boots performance by adaptively modifying the learning rate for each coefficient in the model,
+which continually decreases the learning rate but does so at a varying rate. It performs smaller updates for
+parameters with frequently occurring features, and larger leaning rates to parameters with less frequently occurring
+features which means it deals well with sparse data and is used for large-scale neural nets.
+
+b)
+Task1)
+Final RMSE (on training data):   69.77
+Final RMSE (on validation data): 70.47
+with hyperparameters:
+    my_optimizer=tf.train.GradientDescentOptimizer(learning_rate=0.005),
+    steps=3000,
+    batch_size=70,
+    hidden_units=[10, 10],
+
+Task2)
+AdaGrad:
+I could not beat the ones given by Google in the answer.
+    my_optimizer=tf.train.AdagradOptimizer(learning_rate=0.05),
+    steps=500,
+    batch_size=100,
+    hidden_units=[10, 10],
+Final RMSE (on training data):   98.38
+Final RMSE (on validation data): 98.63
+
+Adam:
+I could not beat the ones given by Google in the answer.
+    my_optimizer=tf.train.AdamOptimizer(learning_rate=0.01),
+    steps=500,
+    batch_size=100,
+    hidden_units=[10, 10],
+Final RMSE (on training data):   69.70
+Final RMSE (on validation data): 70.50
+
+Task3)
+    my_optimizer=tf.train.GradientDescentOptimizer(learning_rate=0.013),
+    steps=5000,
+    batch_size=70,
+    hidden_units=[10, 10],
+
+Final RMSE (on training data):   68.45
+Final RMSE (on validation data): 68.69
+
+c) Skipped

@@ -1,0 +1,19 @@
+Charles Kornoelje | Lab10 | CS344 | April 19, 2020 | Cal Uni
+
+a.i) 25,000 images which are 150x150px color images
+For both cats and dogs, we have 1,000 training images and 500 test images in the example.
+
+a.ii)
+This is similar to the Keras mnist CNN that we made in class, but with some differences. The idea of taking input
+features that go into stacked convolution and maxpooling layers that go into a fully connect layer but
+the dogs/cats CNN has a sigmoid layer (for either cat or dog) but the mnist CNN has a 10 node softmax final layer.
+In the dog/cat network, they use RBG color channels but with mnist, it is just an alpha value, which changes
+the arguments in the input layer of the network. The size of the CONV2D layers varies slightly between the two
+CNNs as well as the number of nodes in the fully connected layer with ReLU.
+
+a.iii) IN the CONV2D second layer, the body and the legs of the dog are able to be seen somewhat which is a
+somewhat discernible pattern. As the image traverses through the network, the images become more abstract
+because more features are being activated: sparsity.
+
+b) Skipped
+
