@@ -1,0 +1,25 @@
+Charles Kornoelje | lab11 | cs344 | 4/27/20 | Cal Uni
+
+Exercise 11.2
+
+a) There are some outliers in the data which might skew the data; for example, hours_per_week has a minimum of one
+and an apparent max of 99 which is a little strange.
+There are many zeros in capital_gains and capital_loss which makes sense, but it is still something to note
+that could skew the data. Additionally, there are about 2/3 males and 1/3 female in the dataset
+which would normally each
+be 1/2 which could show male bias and skew the dataset.
+
+b) There could be bias in the dataset related to the male to female ratio for civilly married couples.
+When looking at the male:female ratio for marital status, females are significantly underrepresented in the
+Married-civ-spouse category by 1:5, but in the other categories of marital status, the ratio is roughly 1:1.
+Having married women underrepresented could be a potential bias in the data.
+
+c) Trained a model with 0.83379817 test accuracy.
+
+d) When looking at race, the Black subgroup has a comparable precision to the other subgroups
+(0.6202 with other being around 0.77+),
+but has a relatively low recall compared to the others (0.4762 with the others usually around 0.52+).
+There are more false negatives than true positives
+in the Black subgroup which could mean that the model struggles with correctly identifying Blacks over 50K.
+The data is skewed towards Blacks <50K shown by the large True Negative number.
+A similar issue is noticed with the Other subgroup.

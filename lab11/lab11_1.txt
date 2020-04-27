@@ -1,0 +1,35 @@
+Charles Kornoelje | lab11 | cs344 | 4/27/20 | Cal Uni
+
+Exercise 11.1
+a) Linear models are better than a deep NN model when the data being modeled has a strong linear relationship,
+thus a linear model will provide a simpler model than the deep NN model as well as use much less computing
+power to calculate a model than training a NN to model a linear relationship. Linear models will train
+more quickly than DNNs.
+
+b) NN does better than linear model.
+NN test acc: 0.84
+Linear test acc: 0.7846
+
+c) Embeddings do not perform as well as the NN model from task 2.
+NN test acc: 0.84
+W/ embeddings: 0.7798
+
+
+d) poor and dull have very similar embeddings. This makes sense because they are both words that
+are from negative reviews. These words aren't very strong or forceful, but they still get
+the negative point across. The carry the same "impact" or "weight" when you say them aloud, so
+people use them in similar contexts when writing reviews.
+
+e)
+my_optimizer = tf.train.AdagradOptimizer(learning_rate=0.2)
+my_optimizer = tf.contrib.estimator.clip_gradients_by_norm(my_optimizer, 5.0)
+classifier = tf.estimator.DNNClassifier(
+  feature_columns=feature_columns,
+  hidden_units=[10,10],
+  optimizer=my_optimizer
+)
+I used all the terms and 1000 steps.
+
+training accuracy 0.85612
+test accuracy 0.8394
+
