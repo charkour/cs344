@@ -170,13 +170,13 @@ def train_memory_batch(memory, model, log_dir):
     action_one_hot = get_one_hot(action, ACTION_SIZE)
     target_one_hot = action_one_hot * target[:, None]
 
-    tb_callback = TensorBoard(log_dir=log_dir, histogram_freq=0,
-                              write_graph=True, write_images=False)
+    # tb_callback = TensorBoard(log_dir=log_dir, histogram_freq=0,
+    #                           write_graph=True, write_images=False)
 
     h = model.fit(
         [history, action_one_hot], target_one_hot, epochs=1,
-        #batch_size=FLAGS.batch_size, verbose=0)
-        batch_size=FLAGS.batch_size, verbose=0, callbacks=[tb_callback])
+        batch_size=FLAGS.batch_size, verbose=0)
+        #batch_size=FLAGS.batch_size, verbose=0, callbacks=[tb_callback])
 
     #if h.history['loss'][0] > 10.0:
     #    print('too large')
