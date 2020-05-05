@@ -3,7 +3,7 @@ Example from: https://github.com/boyuanf/DeepQLearning/blob/master/deep_q_learni
 Used to understand how training/testing for a DQN is done in relation to OpenAI Atari games
 
 There are a couple things that I don't understand yet, like why in the test, it
-will go to the next episode prematurely, and it also calcualtes the reward as well.
+will go to the next episode prematurely, and it also calculates the reward as well.s
 There is some repeated code and a few minor bugs.
 It will save the models in tr_train_breakout.
 """

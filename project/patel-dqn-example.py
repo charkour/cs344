@@ -10,7 +10,7 @@ Takes about 10 seconds to finish a trail on the lab linux machines and 15 on Goo
 Completes in about 169 trails on Linux.
 Updated to load the successful model. But for some reason, it does not work and complete the problem.
 I think there is a bug on how they save the model.
-Google finished in 241 trails. Also does not work. 
+Google finished in 241 trails. Also does not work.
 """
 
 import gym
