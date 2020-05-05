@@ -5,6 +5,10 @@ There are some unused variables.
 Seems to only train, based on previous runs, but doesn't test in the future.
 See his other article with more info for actor critic
 on how to test and train.: https://towardsdatascience.com/reinforcement-learning-w-keras-openai-actor-critic-models-f084612cfd69
+
+Completes in about 169 trails on Linux.
+Updated to load the successful model. But for some reason, it does not work and complete the problem.
+I think there is a bug on how they save the model.
 """
 
 import gym
@@ -13,6 +17,7 @@ import random
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.optimizers import Adam
+from keras.models import load_model
 
 from collections import deque
 
@@ -79,6 +84,10 @@ class DQN:
     def save_model(self, fn):
         self.model.save(fn)
 
+    def load_model(self, path):
+        self.model = load_model(path)
+        print("model loaded")
+
 
 def main():
     env = gym.make("MountainCar-v0")
@@ -117,5 +126,38 @@ def main():
             break
 
 
+def test():
+    env = gym.make("MountainCar-v0")
+
+    dqn_agent = DQN(env=env)
+    dqn_agent.load_model('success.model')
+
+    cur_state = env.reset().reshape(1, 2)
+    trail_len = 500
+    for step in range(trail_len * 5):
+        env.render()
+        action = dqn_agent.act(cur_state)
+        new_state, reward, done, _ = env.step(action)
+
+        # reward = reward if not done else -20
+        new_state = new_state.reshape(1, 2)
+        dqn_agent.remember(cur_state, action, reward, new_state, done)
+
+        dqn_agent.replay()  # internally iterates default (prediction) model
+        dqn_agent.target_train()  # iterates target model
+
+        cur_state = new_state
+        if done:
+            break
+    if step >= 199:
+        print("Failed to complete")
+
+    else:
+        print("Completed")
+
+    env.close()
+
+
 if __name__ == "__main__":
-    main()
+    # main()
+    test()
