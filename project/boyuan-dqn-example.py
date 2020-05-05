@@ -32,7 +32,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_dir', 'tf_train_breakout',
                            """Directory where to write event logs and checkpoint. """)
 tf.app.flags.DEFINE_string('restore_file_path',
-                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/tf_train_breakout/breakout_model_20180610205843_36h_12193ep_sec_version.h5',
+                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/project/tf_train_breakout/breakout_model_20180610205843_36h_12193ep_sec_version.h5',
                            """Path of the restore file """)
 # tf.app.flags.DEFINE_integer('num_episode', 100000,
 tf.app.flags.DEFINE_integer('num_episode', 4,
@@ -294,23 +294,23 @@ def train():
                 print('state: {}, episode: {}, score: {}, global_step: {}, avg loss: {}, step: {}, memory length: {}'
                       .format(state, episode_number, score, global_step, loss / float(step), step, len(memory)))
 
-                if episode_number % 100 == 0 or (episode_number + 1) == FLAGS.num_episode:
-                #if episode_number % 1 == 0 or (episode_number + 1) == FLAGS.num_episode:  # debug
+                #if episode_number % 100 == 0 or (episode_number + 1) == FLAGS.num_episode:
+                if episode_number % 1 == 0 or (episode_number + 1) == FLAGS.num_episode:  # debug
                     print("hmmmmm")
-                    # now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-                    # file_name = "breakout_model_{}.h5".format(now)
-                    # model_path = os.path.join(FLAGS.train_dir, file_name)
-                    # model.save(model_path)
+                    now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+                    file_name = "breakout_model_{}.h5".format(now)
+                    model_path = os.path.join(FLAGS.train_dir, file_name)
+                    model.save(model_path)
 
 
                 # Add user custom data to TensorBoard
-                # loss_summary = tf.Summary(
-                #     value=[tf.Summary.Value(tag="loss", simple_value=loss / float(step))])
-                # file_writer.add_summary(loss_summary, global_step=episode_number)
-                #
-                # score_summary = tf.Summary(
-                #     value=[tf.Summary.Value(tag="score", simple_value=score)])
-                # file_writer.add_summary(score_summary, global_step=episode_number)
+                loss_summary = tf.Summary(
+                    value=[tf.Summary.Value(tag="loss", simple_value=loss / float(step))])
+                file_writer.add_summary(loss_summary, global_step=episode_number)
+
+                score_summary = tf.Summary(
+                    value=[tf.Summary.Value(tag="score", simple_value=score)])
+                file_writer.add_summary(score_summary, global_step=episode_number)
 
                 episode_number += 1
 
@@ -388,9 +388,9 @@ def test():
 
 
 def main(argv=None):
-    # train()
-    test()
-    return 0    # Fix bug causing PyCharm to crash.
+    train()
+    # test()
+    return 0
 
 
 if __name__ == '__main__':
