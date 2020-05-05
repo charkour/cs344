@@ -1,3 +1,13 @@
+"""
+Example from: https://github.com/boyuanf/DeepQLearning/blob/master/deep_q_learning.py
+Used to understand how training/testing for a DQN is done in relation to OpenAI Atari games
+
+There are a couple things that I don't understand yet, like why in the test, it
+will go to the next episode prematurely, and it also calcualtes the reward as well.
+There is some repeated code and a few minor bugs.
+It will save the models in tr_train_breakout.
+"""
+
 import gym
 import random
 import numpy as np
@@ -22,9 +32,10 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_dir', 'tf_train_breakout',
                            """Directory where to write event logs and checkpoint. """)
 tf.app.flags.DEFINE_string('restore_file_path',
-                           '/home/boyuanf/DeepQLearning/tf_train_breakout/breakout_model_20180610205843_36h_12193ep_sec_version.h5',
+                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/tf_train_breakout/breakout_model_20180610205843_36h_12193ep_sec_version.h5',
                            """Path of the restore file """)
-tf.app.flags.DEFINE_integer('num_episode', 100000,
+# tf.app.flags.DEFINE_integer('num_episode', 100000,
+tf.app.flags.DEFINE_integer('num_episode', 4,
                             """number of epochs of the optimization loop.""")
 # tf.app.flags.DEFINE_integer('observe_step_num', 5000,
 tf.app.flags.DEFINE_integer('observe_step_num', 50000,
@@ -272,33 +283,38 @@ def train():
 
             if done:
                 if global_step <= FLAGS.observe_step_num:
+                    print("here?")
                     state = "observe"
                 elif FLAGS.observe_step_num < global_step <= FLAGS.observe_step_num + FLAGS.epsilon_step_num:
+                    print("hi?")
                     state = "explore"
                 else:
+                    print("oh?")
                     state = "train"
                 print('state: {}, episode: {}, score: {}, global_step: {}, avg loss: {}, step: {}, memory length: {}'
                       .format(state, episode_number, score, global_step, loss / float(step), step, len(memory)))
 
                 if episode_number % 100 == 0 or (episode_number + 1) == FLAGS.num_episode:
                 #if episode_number % 1 == 0 or (episode_number + 1) == FLAGS.num_episode:  # debug
-                    now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
-                    file_name = "breakout_model_{}.h5".format(now)
-                    model_path = os.path.join(FLAGS.train_dir, file_name)
-                    model.save(model_path)
+                    print("hmmmmm")
+                    # now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+                    # file_name = "breakout_model_{}.h5".format(now)
+                    # model_path = os.path.join(FLAGS.train_dir, file_name)
+                    # model.save(model_path)
+
 
                 # Add user custom data to TensorBoard
-                loss_summary = tf.Summary(
-                    value=[tf.Summary.Value(tag="loss", simple_value=loss / float(step))])
-                file_writer.add_summary(loss_summary, global_step=episode_number)
-
-                score_summary = tf.Summary(
-                    value=[tf.Summary.Value(tag="score", simple_value=score)])
-                file_writer.add_summary(score_summary, global_step=episode_number)
+                # loss_summary = tf.Summary(
+                #     value=[tf.Summary.Value(tag="loss", simple_value=loss / float(step))])
+                # file_writer.add_summary(loss_summary, global_step=episode_number)
+                #
+                # score_summary = tf.Summary(
+                #     value=[tf.Summary.Value(tag="score", simple_value=score)])
+                # file_writer.add_summary(score_summary, global_step=episode_number)
 
                 episode_number += 1
 
-    file_writer.close()
+    # file_writer.close()
 
 
 def test():
@@ -374,7 +390,9 @@ def test():
 def main(argv=None):
     # train()
     test()
+    return 0    # Fix bug causing PyCharm to crash.
 
 
 if __name__ == '__main__':
     tf.app.run()
+    # main()
