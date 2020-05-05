@@ -1,5 +1,13 @@
 """Code from: https://github.com/rlcode/reinforcement-learning/blob/master/3-atari/1-breakout/breakout_dqn.py
 The goal is to use this to reverse engineer my own version.
+
+I noticed there are some bugs in here.
+For example, the average loss is always 0.
+It will train and then output the file to summary/breakout_dqn/events.out...
+They use Keras to bulid a network, but don't use the softmax but only CONV2D.
+Pre-processing seems to speed up the training.
+There is no testing in this.
+It will also periodically save the model in save_model/breakout_dqn.h5, overwriting the old one.
 """
 
 import gym
