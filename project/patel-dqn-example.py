@@ -5,6 +5,8 @@ There are some unused variables.
 Seems to only train, based on previous runs, but doesn't test in the future.
 See his other article with more info for actor critic
 on how to test and train.: https://towardsdatascience.com/reinforcement-learning-w-keras-openai-actor-critic-models-f084612cfd69
+
+Takes about 10 seconds to finish a trail on the lab linux machines and 15 on Google Colab.
 """
 
 import gym
