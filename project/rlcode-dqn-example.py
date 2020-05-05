@@ -1,3 +1,7 @@
+"""Code from: https://github.com/rlcode/reinforcement-learning/blob/master/3-atari/1-breakout/breakout_dqn.py
+The goal is to use this to reverse engineer my own version.
+"""
+
 import gym
 import random
 import numpy as np
@@ -11,7 +15,7 @@ from keras.layers import Dense, Flatten
 from keras.layers.convolutional import Conv2D
 from keras import backend as K
 
-EPISODES = 50000
+EPISODES = 100
 
 
 class DQNAgent:
@@ -271,5 +275,5 @@ if __name__ == "__main__":
 
                 agent.avg_q_max, agent.avg_loss = 0, 0
 
-        if e % 1000 == 0:
+        if e % 100 == 0:
             agent.model.save_weights("./save_model/breakout_dqn.h5")
