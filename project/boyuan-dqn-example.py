@@ -32,7 +32,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_dir', 'tf_train_breakout',
                            """Directory where to write event logs and checkpoint. """)
 tf.app.flags.DEFINE_string('restore_file_path',
-                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/project/tf_train_breakout/breakout_model_20180610205843_36h_12193ep_sec_version.h5',
+                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/project/tf_train_breakout/breakout_model_20180606123015_24h_4221ep_first_version.h5',
                            """Path of the restore file """)
 # tf.app.flags.DEFINE_integer('num_episode', 100000,
 tf.app.flags.DEFINE_integer('num_episode', 4,
@@ -388,8 +388,8 @@ def test():
 
 
 def main(argv=None):
-    train()
-    # test()
+    # train()
+    test()
     return 0
 
 
