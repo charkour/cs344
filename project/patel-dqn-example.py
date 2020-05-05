@@ -10,6 +10,7 @@ Takes about 10 seconds to finish a trail on the lab linux machines and 15 on Goo
 Completes in about 169 trails on Linux.
 Updated to load the successful model. But for some reason, it does not work and complete the problem.
 I think there is a bug on how they save the model.
+Google finished in 241 trails. Also does not work. 
 """
 
 import gym
@@ -131,11 +132,11 @@ def test():
     env = gym.make("MountainCar-v0")
 
     dqn_agent = DQN(env=env)
-    dqn_agent.load_model('success.model')
+    dqn_agent.load_model('success.modelGoogle')
 
     cur_state = env.reset().reshape(1, 2)
     trail_len = 500
-    for step in range(trail_len * 5):
+    for step in range(trail_len):
         env.render()
         action = dqn_agent.act(cur_state)
         new_state, reward, done, _ = env.step(action)
