@@ -73,6 +73,7 @@ def main():
             obs_t = env.reset()
             episode_reward = 0
             while True:
+                # env.render()
 
                 # 4. Take step using best action or random action
                 obs_t_oh = one_hot(obs_t, n_obs)
@@ -99,6 +100,7 @@ def main():
                         print_report(rewards, episode)
                     break
         print_report(rewards, -1)
+
 
 if __name__ == '__main__':
     main()
