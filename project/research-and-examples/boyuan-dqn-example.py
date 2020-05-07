@@ -32,10 +32,10 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_dir', 'tf_train_breakout',
                            """Directory where to write event logs and checkpoint. """)
 tf.app.flags.DEFINE_string('restore_file_path',
-                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/project/tf_train_breakout/breakout_model_20180606123015_24h_4221ep_first_version.h5',
+                           '/home/cek26/344/cs344/project/tf_train_breakout/breakout_model_20200505181842.h5',
                            """Path of the restore file """)
 # tf.app.flags.DEFINE_integer('num_episode', 100000,
-tf.app.flags.DEFINE_integer('num_episode', 4,
+tf.app.flags.DEFINE_integer('num_episode', 100000,
                             """number of epochs of the optimization loop.""")
 # tf.app.flags.DEFINE_integer('observe_step_num', 5000,
 tf.app.flags.DEFINE_integer('observe_step_num', 50000,
@@ -45,7 +45,8 @@ tf.app.flags.DEFINE_integer('epsilon_step_num', 1000000,
                             """frames over which to anneal epsilon.""")
 tf.app.flags.DEFINE_integer('refresh_target_model_num', 10000,  # update the target Q model every refresh_target_model_num
                             """frames over which to anneal epsilon.""")
-tf.app.flags.DEFINE_integer('replay_memory', 400000,  # takes up to 20 GB to store this amount of history data
+# tf.app.flags.DEFINE_integer('replay_memory', 400000,  # takes up to 20 GB to store this amount of history data
+tf.app.flags.DEFINE_integer('replay_memory', 40000,
                             """number of previous transitions to remember.""")
 tf.app.flags.DEFINE_integer('no_op_steps', 30,
                             """Number of the steps that runs before script begin.""")
@@ -175,7 +176,7 @@ def train_memory_batch(memory, model, log_dir):
 
     h = model.fit(
         [history, action_one_hot], target_one_hot, epochs=1,
-        batch_size=FLAGS.batch_size, verbose=0)
+        batch_size=FLAGS.batch_size, verbose=0, use_multiprocessing=True)
         #batch_size=FLAGS.batch_size, verbose=0, callbacks=[tb_callback])
 
     #if h.history['loss'][0] > 10.0:
@@ -282,20 +283,16 @@ def train():
 
             if done:
                 if global_step <= FLAGS.observe_step_num:
-                    print("here?")
                     state = "observe"
                 elif FLAGS.observe_step_num < global_step <= FLAGS.observe_step_num + FLAGS.epsilon_step_num:
-                    print("hi?")
                     state = "explore"
                 else:
-                    print("oh?")
                     state = "train"
                 print('state: {}, episode: {}, score: {}, global_step: {}, avg loss: {}, step: {}, memory length: {}'
                       .format(state, episode_number, score, global_step, loss / float(step), step, len(memory)))
 
-                #if episode_number % 100 == 0 or (episode_number + 1) == FLAGS.num_episode:
-                if episode_number % 1 == 0 or (episode_number + 1) == FLAGS.num_episode:  # debug
-                    print("hmmmmm")
+                if episode_number % 1000 == 0 or (episode_number + 1) == FLAGS.num_episode:
+                #if episode_number % 1 == 0 or (episode_number + 1) == FLAGS.num_episode:  # debug
                     now = datetime.utcnow().strftime("%Y%m%d%H%M%S")
                     file_name = "breakout_model_{}.h5".format(now)
                     model_path = os.path.join(FLAGS.train_dir, file_name)
@@ -313,7 +310,7 @@ def train():
 
                 episode_number += 1
 
-    # file_writer.close()
+    file_writer.close()
 
 
 def test():
@@ -395,3 +392,6 @@ def main(argv=None):
 if __name__ == '__main__':
     tf.app.run()
     # main()
+
+# started training at 2:17pm, 100,000 episodes.
+# finished in 15 minutes on episode 409. With avg loss 0.0032397061493737327
