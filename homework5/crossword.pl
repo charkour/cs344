@@ -1,3 +1,5 @@
+% Charles Kornoelje | hw5 | cs344 | Calvin University | 05/12/2020
+
   word(astante,  a,s,t,a,n,t,e).
   word(astoria,  a,s,t,o,r,i,a).
   word(baratto,  b,a,r,a,t,t,o).
