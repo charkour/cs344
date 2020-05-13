@@ -64,7 +64,7 @@ def get_keras_model(action_space_shape):
 
 model = get_keras_model(nb_actions)
 
-memory = SequentialMemory(limit=10000)
+memory = SequentialMemory(window_length=1, limit=10000)
 policy = DecayEpsGreedyQPolicy(max_eps=0.9, min_eps=0, lamb=1 / (1e4))
 dqn = DQNAgent(model=model, nb_actions=nb_actions,
                memory=memory, nb_steps_warmup=500,
@@ -81,7 +81,9 @@ except Exception as e:
     pass
 
 temp_folder = tempfile.mkdtemp()
-env.monitor.start(temp_folder)
+env = env.unwrapped
+env = gym.wrappers.Monitor(env, directory=temp_folder, force=True, write_upon_reset=True)
+# env.monitor.start(temp_folder)
 
 dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
 
@@ -92,7 +94,4 @@ dqn.save_weights('dqn_{}_weights.h5f'.format(ENV_NAME), overwrite=True)
 dqn.test(env, nb_episodes=20, visualize=False)
 env.monitor.close()
 
-upload = input("Upload? (y/n)")
-if upload == "y":
-    gym.upload(temp_folder, api_key='YOUR_OWN_KEY')
 
