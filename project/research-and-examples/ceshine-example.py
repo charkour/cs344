@@ -44,7 +44,7 @@ class DecayEpsGreedyQPolicy(Policy):
         return action
 
 
-ENV_NAME = 'FrozenLake-v0'
+ENV_NAME = 'FrozenLake8x8-v0'
 
 np.set_printoptions(threshold=np.inf)
 np.set_printoptions(precision=4)
@@ -57,7 +57,7 @@ nb_actions = env.action_space.n
 
 def get_keras_model(action_space_shape):
     model = Sequential()
-    model.add(Embedding(16, 4, input_length=1))
+    model.add(Embedding(64, 4, input_length=1))
     model.add(Reshape((4,)))
     print(model.summary())
     return model
@@ -82,16 +82,17 @@ except Exception as e:
 
 temp_folder = tempfile.mkdtemp()
 env = env.unwrapped
-env = gym.wrappers.Monitor(env, directory=temp_folder, force=True, write_upon_reset=True)
+# env = gym.wrappers.Monitor(env, directory=temp_folder, force=True, write_upon_reset=True)
 # env.monitor.start(temp_folder)
 
 dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
+# dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
 
 # After training is done, we save the final weights.
-dqn.save_weights('dqn_{}_weights.h5f'.format(ENV_NAME), overwrite=True)
+dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
 
 # Finally, evaluate our algorithm for 5 episodes.
 dqn.test(env, nb_episodes=20, visualize=False)
-env.monitor.close()
+# env.monitor.close()
 
 
