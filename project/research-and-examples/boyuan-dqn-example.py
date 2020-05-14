@@ -32,7 +32,7 @@ FLAGS = tf.app.flags.FLAGS
 tf.app.flags.DEFINE_string('train_dir', 'tf_train_breakout',
                            """Directory where to write event logs and checkpoint. """)
 tf.app.flags.DEFINE_string('restore_file_path',
-                           '/home/cek26/344/cs344/project/tf_train_breakout/breakout_model_20200505181842.h5',
+                           '/Users/charleskornoelje/Documents/LocalDevelopment/344/cs344/project/research-and-examples/tf_train_breakout/breakout_model_20200512101401.h5',
                            """Path of the restore file """)
 # tf.app.flags.DEFINE_integer('num_episode', 100000,
 tf.app.flags.DEFINE_integer('num_episode', 100000,
@@ -315,18 +315,12 @@ def train():
 
 def test():
     env = gym.make('BreakoutDeterministic-v4')
+    env._max_episode_steps = 40000
 
     episode_number = 0
     epsilon = 0.001
     global_step = FLAGS.observe_step_num+1
-    # model = load_model(FLAGS.restore_file_path)
     model = load_model(FLAGS.restore_file_path, custom_objects={'huber_loss': huber_loss})  # load model with customized loss func
-
-    # test how to deep copy a model
-    '''
-    model_copy = clone_model(model)    # only copy the structure, not the value of the weights
-    model_copy.set_weights(model.get_weights())
-    '''
 
     while episode_number < FLAGS.num_episode:
 
@@ -384,8 +378,8 @@ def test():
 
 
 def main(argv=None):
-    train()
-    # test()
+    # train()
+    test()
     return 0
 
 
