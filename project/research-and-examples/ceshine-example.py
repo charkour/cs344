@@ -1,13 +1,16 @@
-# -*- coding: utf-8 -*-
 """
 @author: CeShine
+@author: Charkour
+Updated to work for 8x8 frozen ice.
+Ability to load weights.
+Fix small bugs for new versions.
+Reuseability features.
 
-Using keras-rl (https://github.com/matthiasplappert/keras-rl) to provide basic framework, 
+Using keras-rl (https://github.com/matthiasplappert/keras-rl) to provide basic framework,
 and embedding layer to make it essentially a Q-table lookup algorithm.
 """
 
 import tempfile
-
 import gym
 import numpy as np
 from keras.models import Sequential
@@ -85,14 +88,17 @@ env = env.unwrapped
 # env = gym.wrappers.Monitor(env, directory=temp_folder, force=True, write_upon_reset=True)
 # env.monitor.start(temp_folder)
 
-dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
-# dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
+# dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
+# # dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
+#
+# # After training is done, we save the final weights.
+# dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
 
-# After training is done, we save the final weights.
-dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
+dqn.load_weights("./dqn_FrozenLake8x8-v0_weights1.h5f")
 
 # Finally, evaluate our algorithm for 5 episodes.
-dqn.test(env, nb_episodes=20, visualize=False)
+dqn.test(env, nb_episodes=20, visualize=True)
 # env.monitor.close()
+
 
 
