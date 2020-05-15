@@ -94,7 +94,7 @@ env = env.unwrapped
 # # After training is done, we save the final weights.
 # dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
 
-dqn.load_weights("./dqn_FrozenLake8x8-v0_weights1.h5f")
+dqn.load_weights("./dqn_FrozenLake8x8-v0_weights.h5f")
 
 # Finally, evaluate our algorithm for 5 episodes.
 dqn.test(env, nb_episodes=100, visualize=False)
