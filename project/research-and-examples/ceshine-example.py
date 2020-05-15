@@ -97,7 +97,7 @@ env = env.unwrapped
 dqn.load_weights("./dqn_FrozenLake8x8-v0_weights1.h5f")
 
 # Finally, evaluate our algorithm for 5 episodes.
-dqn.test(env, nb_episodes=20, visualize=True)
+dqn.test(env, nb_episodes=100, visualize=False)
 # env.monitor.close()
 
 
