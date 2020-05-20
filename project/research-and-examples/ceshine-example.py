@@ -1,6 +1,3 @@
-import warnings
-warnings.filterwarnings('ignore')
-
 """
 @author: CeShine
 @author: Charkour
@@ -18,12 +15,16 @@ import gym
 import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Flatten, Dropout, Reshape
+from keras.layers import Conv1D
 from keras.layers.embeddings import Embedding
 from keras.optimizers import Adam
 from keras.layers.normalization import BatchNormalization
 from rl.agents.dqn import DQNAgent
 from rl.policy import Policy, BoltzmannQPolicy
 from rl.memory import SequentialMemory
+
+import warnings
+warnings.filterwarnings('ignore')
 
 
 class DecayEpsGreedyQPolicy(Policy):
@@ -51,6 +52,7 @@ class DecayEpsGreedyQPolicy(Policy):
 
 
 ENV_NAME = 'FrozenLake8x8-v0'
+FILE_PATH = 'dqn_{}_weights_dense_double.h5f'.format(ENV_NAME)
 
 # Some parameters for printing the output.
 np.set_printoptions(threshold=np.inf)
@@ -62,14 +64,25 @@ np.random.seed(123)
 env.seed(123)
 nb_actions = env.action_space.n
 
+
 def get_keras_model(action_space_shape):
     model = Sequential()
-    model.add(Embedding(64, 4, input_length=1))
-    model.add(Reshape((4,)))
+    model.add(Embedding(64, 32, input_length=1))
+    model.add(Reshape((32,)))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(4, activation='linear'))
+    # model.add(Reshape((4,)))
+    # model.add(Conv1D(8, 2))
+    # model.add(Flatten())
+    # model.add(Reshape((4,)))
     print(model.summary())
     return model
 
+
 model = get_keras_model(nb_actions)
+# print(nb_actions) # returns 4: up, down, left and right.
 
 memory = SequentialMemory(window_length=1, limit=10000)
 policy = DecayEpsGreedyQPolicy(max_eps=0.9, min_eps=0, lamb=1 / 1e4)
@@ -82,27 +95,23 @@ dqn.compile(Adam())
 
 
 try:
-    dqn.load_weights('dqn_{}_weights.h5f'.format(ENV_NAME))
+    dqn.load_weights(FILE_PATH)
 except Exception as e:
     print(e)
     pass
 
 temp_folder = tempfile.mkdtemp()
-env = env.unwrapped
-# env = gym.wrappers.Monitor(env, directory=temp_folder, force=True, write_upon_reset=True)
-# env.monitor.start(temp_folder)
-#
-# dqn.fit(esnv, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
-# # dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
-#
-# # After training is done, we save the final weights.
-# dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
 
-dqn.load_weights("./dqn_FrozenLake8x8-v0_weights.h5f")
+dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
+# dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
 
-# Finally, evaluate our algorithm for 5 episodes.
-dqn.test(env, nb_episodes=100, visualize=False, verbose=2)
-# env.monitor.close()
+# After training is done, we save the final weights.
+dqn.save_weights(FILE_PATH, overwrite=True)
+
+dqn.load_weights(FILE_PATH)
+
+# Finally, evaluate our algorithm for 100 episodes.
+dqn.test(env, nb_episodes=100, visualize=False)
 
 
 
