@@ -51,6 +51,7 @@ class DecayEpsGreedyQPolicy(Policy):
 
 
 ENV_NAME = 'FrozenLake8x8-v0'
+FILE_PATH = 'dqn_{}_weights.h5f'.format(ENV_NAME)
 
 # Some parameters for printing the output.
 np.set_printoptions(threshold=np.inf)
@@ -83,7 +84,7 @@ dqn.compile(Adam())
 
 
 try:
-    dqn.load_weights('dqn_{}_weights.h5f'.format(ENV_NAME))
+    dqn.load_weights(FILE_PATH)
 except Exception as e:
     print(e)
     pass
@@ -94,11 +95,11 @@ dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
 # dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
 
 # After training is done, we save the final weights.
-dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
+dqn.save_weights(FILE_PATH, overwrite=True)
 
-dqn.load_weights("./dqn_FrozenLake8x8-v0_weights.h5f")
+dqn.load_weights(FILE_PATH)
 
-# Finally, evaluate our algorithm for 5 episodes.
+# Finally, evaluate our algorithm for 100 episodes.
 dqn.test(env, nb_episodes=100, visualize=False)
 
 
