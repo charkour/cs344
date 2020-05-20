@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings('ignore')
+
 """
 @author: CeShine
 @author: Charkour

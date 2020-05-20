@@ -1,4 +1,11 @@
+"""Little script to quickly assess the performance of the DQN agent.
+This is not very efficient but it does what it needs to.
+"""
+
 import subprocess
-proc = subprocess.Popen(['python3', 'ceshine-example.py'], stdout=subprocess.PIPE)
-out = proc.communicate()[0]
-print(out)
+out = subprocess.check_output(['python3', 'ceshine-example.py'])
+decoded = out.decode('utf-8')
+print(decoded)
+completed = str(decoded.count('reward: 1.'))
+total = str(decoded.count('reward: '))
+print(completed + "/" + total)
