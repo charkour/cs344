@@ -51,7 +51,7 @@ class DecayEpsGreedyQPolicy(Policy):
 
 
 ENV_NAME = 'FrozenLake8x8-v0'
-FILE_PATH = 'dqn_{}_weights.h5f'.format(ENV_NAME)
+FILE_PATH = 'dqn_{}_weights_double.h5f'.format(ENV_NAME)
 
 # Some parameters for printing the output.
 np.set_printoptions(threshold=np.inf)
@@ -78,7 +78,7 @@ policy = DecayEpsGreedyQPolicy(max_eps=0.9, min_eps=0, lamb=1 / 1e4)
 dqn = DQNAgent(model=model, nb_actions=nb_actions,
                memory=memory, nb_steps_warmup=500,
                target_model_update=1e-2, policy=policy,
-               enable_double_dqn=False, batch_size=512
+               enable_double_dqn=True, batch_size=512
                )
 dqn.compile(Adam())
 
