@@ -15,6 +15,7 @@ import gym
 import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Flatten, Dropout, Reshape
+from keras.layers import Conv1D
 from keras.layers.embeddings import Embedding
 from keras.optimizers import Adam
 from keras.layers.normalization import BatchNormalization
@@ -51,7 +52,7 @@ class DecayEpsGreedyQPolicy(Policy):
 
 
 ENV_NAME = 'FrozenLake8x8-v0'
-FILE_PATH = 'dqn_{}_weights_double.h5f'.format(ENV_NAME)
+FILE_PATH = 'dqn_{}_weights_dense_double.h5f'.format(ENV_NAME)
 
 # Some parameters for printing the output.
 np.set_printoptions(threshold=np.inf)
@@ -63,12 +64,22 @@ np.random.seed(123)
 env.seed(123)
 nb_actions = env.action_space.n
 
+
 def get_keras_model(action_space_shape):
     model = Sequential()
-    model.add(Embedding(64, 4, input_length=1))
-    model.add(Reshape((4,)))
+    model.add(Embedding(64, 32, input_length=1))
+    model.add(Reshape((32,)))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(4, activation='linear'))
+    # model.add(Reshape((4,)))
+    # model.add(Conv1D(8, 2))
+    # model.add(Flatten())
+    # model.add(Reshape((4,)))
     print(model.summary())
     return model
+
 
 model = get_keras_model(nb_actions)
 # print(nb_actions) # returns 4: up, down, left and right.
@@ -78,7 +89,7 @@ policy = DecayEpsGreedyQPolicy(max_eps=0.9, min_eps=0, lamb=1 / 1e4)
 dqn = DQNAgent(model=model, nb_actions=nb_actions,
                memory=memory, nb_steps_warmup=500,
                target_model_update=1e-2, policy=policy,
-               enable_double_dqn=True, batch_size=512
+               enable_double_dqn=False, batch_size=512
                )
 dqn.compile(Adam())
 
