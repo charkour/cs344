@@ -1,6 +1,3 @@
-import warnings
-warnings.filterwarnings('ignore')
-
 """
 @author: CeShine
 @author: Charkour
@@ -24,6 +21,9 @@ from keras.layers.normalization import BatchNormalization
 from rl.agents.dqn import DQNAgent
 from rl.policy import Policy, BoltzmannQPolicy
 from rl.memory import SequentialMemory
+
+import warnings
+warnings.filterwarnings('ignore')
 
 
 class DecayEpsGreedyQPolicy(Policy):
@@ -70,6 +70,7 @@ def get_keras_model(action_space_shape):
     return model
 
 model = get_keras_model(nb_actions)
+# print(nb_actions) # returns 4: up, down, left and right.
 
 memory = SequentialMemory(window_length=1, limit=10000)
 policy = DecayEpsGreedyQPolicy(max_eps=0.9, min_eps=0, lamb=1 / 1e4)
@@ -88,21 +89,17 @@ except Exception as e:
     pass
 
 temp_folder = tempfile.mkdtemp()
-env = env.unwrapped
-# env = gym.wrappers.Monitor(env, directory=temp_folder, force=True, write_upon_reset=True)
-# env.monitor.start(temp_folder)
-#
-# dqn.fit(esnv, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
-# # dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
-#
-# # After training is done, we save the final weights.
-# dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
+
+dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
+# dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
+
+# After training is done, we save the final weights.
+dqn.save_weights('dqn_{}_weights1.h5f'.format(ENV_NAME), overwrite=True)
 
 dqn.load_weights("./dqn_FrozenLake8x8-v0_weights.h5f")
 
 # Finally, evaluate our algorithm for 5 episodes.
-dqn.test(env, nb_episodes=100, visualize=False, verbose=2)
-# env.monitor.close()
+dqn.test(env, nb_episodes=100, visualize=False)
 
 
 
