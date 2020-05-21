@@ -67,16 +67,8 @@ nb_actions = env.action_space.n
 
 def get_keras_model(action_space_shape):
     model = Sequential()
-    model.add(Embedding(64, 32, input_length=1))
-    model.add(Reshape((32,)))
-    model.add(Dense(8, activation='relu'))
-    model.add(Dense(8, activation='relu'))
-    model.add(Dense(8, activation='relu'))
-    model.add(Dense(4, activation='linear'))
-    # model.add(Reshape((4,)))
-    # model.add(Conv1D(8, 2))
-    # model.add(Flatten())
-    # model.add(Reshape((4,)))
+    model.add(Embedding(64, 4, input_length=1))
+    model.add(Reshape((4,)))
     print(model.summary())
     return model
 
