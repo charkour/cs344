@@ -52,7 +52,7 @@ class DecayEpsGreedyQPolicy(Policy):
 
 
 ENV_NAME = 'FrozenLake8x8-v0'
-FILE_PATH = 'dqn_{}_weights_dense_double.h5f'.format(ENV_NAME)
+FILE_PATH = 'dqn_{}_weights_double.h5f'.format(ENV_NAME)
 
 # Some parameters for printing the output.
 np.set_printoptions(threshold=np.inf)
@@ -94,7 +94,7 @@ except Exception as e:
 
 temp_folder = tempfile.mkdtemp()
 
-dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
+# dqn.fit(env, nb_steps=1e5, visualize=False, verbose=1, log_interval=10000)
 # dqn.fit(env, nb_steps=100, visualize=False, verbose=1, log_interval=100)
 
 # After training is done, we save the final weights.
