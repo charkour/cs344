@@ -1,7 +1,8 @@
-# A Dive into Reinforcement Learning: Artificial Intelligence Project Proposal
+# Harder Than It Seems: Artificial Intelligence Reinforcement Learning Project
 
-By Charles Kornoelje
-for CS 344 at Calvin University
+By Charles Kornoelje for CS344 at Calvin University
+
+Prof. Vander Linden
 
 Updated: 05/21/20
 
